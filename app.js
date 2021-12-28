@@ -1,10 +1,16 @@
+// lineTo -> quadraticCurveTo 이렇게 바꾸면 곡선
+
 class App {
     constructor() {
         this.canvas = document.createElement('canvas');
         this.ctx = this.canvas.getContext('2d');
         document.body.appendChild(this.canvas);
 
+<<<<<<< HEAD
         this.waveGroup = new WaveGroup();
+=======
+        this.WaveGroup = new WaveGroup();
+>>>>>>> 81db9a83b71f7c0a8874be386200768b324923a2
 
         window.addEventListener('resize', this.resize.bind(this), false);
         this.resize();
@@ -20,13 +26,21 @@ class App {
         this.canvas.height = this.stageHeight * 2;
         this.ctx.scale(2, 2);
 
+<<<<<<< HEAD
         this.waveGroup.resize(this.stageWidth, this.stageHeight);
+=======
+        this.WaveGroup.resize(this.stageWidth, this.stageHeight);
+>>>>>>> 81db9a83b71f7c0a8874be386200768b324923a2
     }
     
     animate(t) {
         this.ctx.clearRect(0, 0, this.stageWidth, this.stageHeight);
 
+<<<<<<< HEAD
         this.waveGroup.draw(this.ctx);
+=======
+        this.WaveGroup.draw(this.ctx);
+>>>>>>> 81db9a83b71f7c0a8874be386200768b324923a2
         
         requestAnimationFrame(this.animate.bind(this));
     }
@@ -73,7 +87,11 @@ class Wave {
 
         for (let i = 0; i < this.totalPoints; i++) {
             const point = new Point(
+<<<<<<< HEAD
                 this.index + i,
+=======
+                this.index + 1,
+>>>>>>> 81db9a83b71f7c0a8874be386200768b324923a2
                 this.pointGap * i,
                 this.centerY,
             );
@@ -84,6 +102,34 @@ class Wave {
     draw(ctx) {
         ctx.beginPath();
         ctx.fillStyle = this.color;
+<<<<<<< HEAD
+=======
+
+        let prevX = this.points[0].x;
+        let prevY = this.points[0].y;
+
+        ctx.moveTo(prevX, prevY);
+
+        for (let i = 0; i < this.totalPoints; i++) {
+            if(i < this.totalPoints - 1) {
+                this.points[i].update();
+            }
+
+            const cx = (prevX + this.points[i].x) / 2;
+            const cy = (prevY + this.points[i].y) / 2;
+
+            ctx.quadraticCurveTo(cx, cy);
+
+            prevX = this.points[i].x;
+            prevY = this.points[i].y;
+        }
+
+        ctx.lineTo(prevX, prevY);
+        ctx.lineTo(this.stageWidth, this.stageHeight);
+        ctx.lineTo(this.points[0].x, this.stageHeight);
+        ctx.fill;
+        ctx.closePath();
+>>>>>>> 81db9a83b71f7c0a8874be386200768b324923a2
 
         let prevX = this.points[0].x;
         let prevY = this.points[0].y;
@@ -142,6 +188,40 @@ class WaveGroup {
         for (let i = 0; i < this.totalWaves; i++) {
             const wave = this.waves[i];
             wave.draw(ctx);
+        }
+    }
+}
+
+class WaveGroup {
+    constructor() {
+        this.totalWaves = 3;
+        this.totalPoints = 6;
+
+        this.color = ['rgba(0,199,235,0.5)', 'rgba(155,175,235, 0.4)', 'rgba(200,235,235, 0.5)'];
+
+        this.waves = [];
+
+        for (let i = 0; i < this.totalWaves; i++) {
+            const wave = new Wave(
+                i,
+                this.totalPoints,
+                this.color[i]
+            );
+            this.waves[i] = wave;
+        }
+    }
+
+    resize(stageWidth, stageHeight) {
+        for (let i = 0; i < this.totalWaves; i++) {
+            const wave = this.waves[i];
+            wave.resize(stageWidth, stageHeight);
+        }
+    }
+
+    draw(ctx) {
+        for (let i = 0; i < this.totalWaves; i++) {
+            const wave = this.waves[i];
+            wave.resize(stageWidth, stageHeight);
         }
     }
 }
