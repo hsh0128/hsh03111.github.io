@@ -1,5 +1,3 @@
-// lineTo -> quadraticCurveTo 이렇게 바꾸면 곡선
-
 class App {
     constructor() {
         this.canvas = document.createElement('canvas');
@@ -144,40 +142,6 @@ class WaveGroup {
         for (let i = 0; i < this.totalWaves; i++) {
             const wave = this.waves[i];
             wave.draw(ctx);
-        }
-    }
-}
-
-class WaveGroup {
-    constructor() {
-        this.totalWaves = 3;
-        this.totalPoints = 6;
-
-        this.color = ['rgba(0,199,235,0.5)', 'rgba(155,175,235, 0.4)', 'rgba(200,235,235, 0.5)'];
-
-        this.waves = [];
-
-        for (let i = 0; i < this.totalWaves; i++) {
-            const wave = new Wave(
-                i,
-                this.totalPoints,
-                this.color[i]
-            );
-            this.waves[i] = wave;
-        }
-    }
-
-    resize(stageWidth, stageHeight) {
-        for (let i = 0; i < this.totalWaves; i++) {
-            const wave = this.waves[i];
-            wave.resize(stageWidth, stageHeight);
-        }
-    }
-
-    draw(ctx) {
-        for (let i = 0; i < this.totalWaves; i++) {
-            const wave = this.waves[i];
-            wave.resize(stageWidth, stageHeight);
         }
     }
 }
