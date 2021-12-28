@@ -1,5 +1,3 @@
-import { Wave } from "./wave.js";
-
 class App {
     constructor() {
         this.canvas = document.createElement('canvas');
